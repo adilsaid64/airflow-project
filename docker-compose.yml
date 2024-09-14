@@ -1,0 +1,103 @@
+version: '3'
+
+x-airflow-common:
+  &airflow-common
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: apache/airflow:2.10.1
+  env_file:
+    - .env
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
+    - ./utils:/opt/airflow/utils
+    - ./requirements.txt:/opt/airflow/requirements.txt
+  depends_on:
+    - postgres
+    - redis
+
+services:
+  postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB} 
+      POSTGRES_PORT: ${POSTGRES_PORT}
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    deploy:
+      resources:
+        limits:
+          cpus: '${POSTGRES_CPU_LIMIT}'
+          memory: '${POSTGRES_MEMORY_LIMIT}'
+
+  redis:
+    image: redis:latest
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"  
+    deploy:
+      resources:
+        limits:
+          cpus: '${REDIS_CPU_LIMIT}'
+          memory: '${REDIS_MEMORY_LIMIT}'
+
+  airflow-init:
+    <<: *airflow-common
+    command: >
+      bash -c "pip install -r /opt/airflow/requirements.txt && 
+               airflow db init && 
+               airflow db upgrade && 
+               airflow users create --username ${AIRFLOW_ADMIN_USERNAME} --firstname ${AIRFLOW_ADMIN_FIRSTNAME} --lastname ${AIRFLOW_ADMIN_LASTNAME} --role Admin --email ${AIRFLOW_ADMIN_EMAIL} --password ${AIRFLOW_ADMIN_PASSWORD}"
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          cpus: '${AIRFLOW_INIT_CPU_LIMIT}'
+          memory: '${AIRFLOW_INIT_MEMORY_LIMIT}'
+
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "${AIRFLOW_WEBSERVER_PORT}:${AIRFLOW_WEBSERVER_PORT}"
+    deploy:
+      resources:
+        limits:
+          cpus: '${AIRFLOW_WEBSERVER_CPU_LIMIT}'
+          memory: '${AIRFLOW_WEBSERVER_MEMORY_LIMIT}'
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    deploy:
+      resources:
+        limits:
+          cpus: '${AIRFLOW_SCHEDULER_CPU_LIMIT}'
+          memory: '${AIRFLOW_SCHEDULER_MEMORY_LIMIT}'
+
+  airflow-worker:
+    <<: *airflow-common
+    command: celery worker
+    environment:
+      - C_FORCE_ROOT=1
+    deploy:
+      resources:
+        limits:
+          cpus: '${AIRFLOW_WORKER_CPU_LIMIT}'
+          memory: '${AIRFLOW_WORKER_MEMORY_LIMIT}'
+      replicas: ${AIRFLOW_WORKER_REPLICAS}
+
+  flower:
+    <<: *airflow-common
+    command: celery flower --port=${FLOWER_PORT}
+    ports:
+      - "${FLOWER_PORT}:${FLOWER_PORT}"
+    environment:
+      - FLOWER_BASIC_AUTH=${FLOWER_USERNAME}:${FLOWER_PASSWORD}
+    deploy:
+      resources:
+        limits:
+          cpus: '${FLOWER_CPU_LIMIT}'
+          memory: '${FLOWER_MEMORY_LIMIT}'
