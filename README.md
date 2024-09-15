@@ -27,3 +27,19 @@ By tracking both, we can get a clearer picture of how clean or dirty our energy 
 - **Redis**: Message broker for Celery.
 - **Flower**: Web-based tool for monitoring Celery workers.
 
+## Screenshots
+
+### Airflow
+![alt text](screenshots/airflow-dag-preview.png)
+
+## Metabase
+![alt text](screenshots/metabase-ss1.png)
+![alt text](screenshots/metabase-ss2.png)
+
+## Docker
+![alt text](screenshots/docker-ss.png)
+
+## Minio(AWS S3)
+![alt text](screenshots/minio-buckets.png)
+![alt text](screenshots/bucket-structure.png)
+![alt text](screenshots/bucket-folder.png)
