@@ -17,6 +17,7 @@ By tracking both, we can get a clearer picture of how clean or dirty our energy 
 
 1. Setup `.env` using  `.template.env`.
 2. Run `docker-compose -f docker-compose.yml up --build -d --remove-orphans`
+3. Run `docker compose -f docker-compose.yml down` to bring down the containers when done.
 
 ## Components
 - **Airflow**: Orchestrates the ETL process.
