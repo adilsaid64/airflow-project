@@ -2,3 +2,8 @@
 venv
 logs
 **.pyc
+commands.txt
+minio
+metabase-data
+postgres-data
+dev.ipynb
