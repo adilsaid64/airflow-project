@@ -13,6 +13,9 @@ By tracking both, we can get a clearer picture of how clean or dirty our energy 
 - **Containerized**: Entire project runs in Docker for easy setup and deployment.
 
 
+![alt text](screenshots/airflow.png)
+
+
 ## Setup
 
 1. Setup `.env` using  `.template.env`.
