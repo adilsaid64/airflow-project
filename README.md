@@ -13,6 +13,16 @@ By tracking both, we can get a clearer picture of how clean or dirty our energy 
 - **Containerized**: Entire project runs in Docker for easy setup and deployment.
 
 
+# Example Business Problem
+Businesses are increasingly required to reduce their carbon footprint due to corporate sustainability goals, regulatory pressures, and consumer demand for environmentally responsible practices. However, many businesses, especially those with energy-intensive operations (e.g., manufacturing plants, data centers), lack visibility into when the electricity they use is generated from renewable or low-carbon sources. As a result, they miss opportunities to align their energy consumption with periods of cleaner energy availability, leading to higher emissions.
+
+# Solution
+This project delivers a daily dashboard that provides insights into the previous day's carbon intensity and energy generation mix. The system fetches, processes, and reports on the carbon intensity of the electricity grid, enabling businesses to:
+
+- Optimize operations to run during periods when carbon intensity is low.
+- Reduce their carbon emissions by aligning energy-intensive activities with cleaner energy availability.
+- Report on sustainability performance and progress toward emission reduction goals.
+
 ![alt text](screenshots/airflow.png)
 
 
