@@ -57,3 +57,10 @@ This project delivers a daily dashboard that provides insights into the previous
 ![alt text](screenshots/minio-buckets.png)
 ![alt text](screenshots/bucket-structure.png)
 ![alt text](screenshots/bucket-folder.png)
+
+# Future Improvements
+- **Machine Learning for Forecasting**: Use ML models to predict future carbon intensity, allowing businesses to plan operations proactively.
+- **Incorporate Weather and Energy Prices**: Combine weather and energy price data to offer a holistic view, enabling both carbon-efficient and cost-effective decisions.
+- **Dynamic Alerts**: Provide real-time notifications when carbon intensity is low, helping businesses adjust operations automatically.
+- **Energy Usage Optimization**: Correlate company-specific energy consumption with carbon intensity data to offer tailored operational recommendations.
+- **Carbon Footprint Simulation**: Add scenario analysis tools to estimate emissions reductions and cost savings from operational shifts.
